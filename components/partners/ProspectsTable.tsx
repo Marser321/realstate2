@@ -17,7 +17,9 @@ import {
     MapPin,
     Calendar,
     MessageSquare,
-    ExternalLink
+    ExternalLink,
+    CheckCircle,
+    XCircle
 } from 'lucide-react'
 
 // Prospect type
@@ -128,7 +130,26 @@ export function ProspectsTable({ prospects, onAction }: ProspectsTableProps) {
             id: 'actions',
             header: '',
             cell: (info) => (
-                <div className="flex gap-2">
+                <div className="flex gap-2 justify-end">
+                    {info.row.original.status === 'new' && (
+                        <>
+                            <button
+                                onClick={() => onAction(info.row.original.id, 'approve')}
+                                className="p-2 rounded-lg bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 transition-all"
+                                title="Aprobar (Calificar)"
+                            >
+                                <CheckCircle className="w-4 h-4" />
+                            </button>
+                            <button
+                                onClick={() => onAction(info.row.original.id, 'reject')}
+                                className="p-2 rounded-lg bg-red-500/10 text-red-600 hover:bg-red-500/20 transition-all"
+                                title="Rechazar (Descartar)"
+                            >
+                                <XCircle className="w-4 h-4" />
+                            </button>
+                        </>
+                    )}
+                    <div className="w-px h-6 bg-border/50 mx-1" />
                     <button
                         onClick={() => onAction(info.row.original.id, 'view')}
                         className="p-2 rounded-lg bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
