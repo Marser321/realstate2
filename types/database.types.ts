@@ -423,43 +423,7 @@ export interface Database {
                 }
                 Relationships: []
             }
-            admin_logs: {
-                Row: {
-                    id: string
-                    created_at: string
-                    admin_id: string | null
-                    action: string
-                    target_resource: string
-                    details: Json | null
-                    ip_address: string | null
-                }
-                Insert: {
-                    id?: string
-                    created_at?: string
-                    admin_id?: string | null
-                    action: string
-                    target_resource: string
-                    details?: Json | null
-                    ip_address?: string | null
-                }
-                Update: {
-                    id?: string
-                    created_at?: string
-                    admin_id?: string | null
-                    action?: string
-                    target_resource?: string
-                    details?: Json | null
-                    ip_address?: string | null
-                }
-                Relationships: [
-                    {
-                        foreignKeyName: "admin_logs_admin_id_fkey"
-                        columns: ["admin_id"]
-                        referencedRelation: "profiles"
-                        referencedColumns: ["id"]
-                    }
-                ]
-            }
+
         }
         Views: {
             [_ in never]: never
