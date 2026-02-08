@@ -38,30 +38,40 @@ export function useAuth() {
         // Get initial session
         supabase.auth.getSession().then(async ({ data: { session } }: any) => {
             let isAdmin = false
-            if (session?.user) {
-                isAdmin = await checkAdminStatus(session.user.id)
-            }
-            setAuthState({
-                user: session?.user ?? null,
-                session,
-                loading: false,
-                isAdmin,
-            })
-        })
-
-        // Subscribe to auth changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event: any, session: any) => {
-                let isAdmin = false
+            try {
                 if (session?.user) {
                     isAdmin = await checkAdminStatus(session.user.id)
                 }
+            } catch (error) {
+                console.error('Error checking admin status:', error)
+            } finally {
                 setAuthState({
                     user: session?.user ?? null,
                     session,
                     loading: false,
                     isAdmin,
                 })
+            }
+        })
+
+        // Subscribe to auth changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+            async (_event: any, session: any) => {
+                let isAdmin = false
+                try {
+                    if (session?.user) {
+                        isAdmin = await checkAdminStatus(session.user.id)
+                    }
+                } catch (error) {
+                    console.error('Error checking admin status:', error)
+                } finally {
+                    setAuthState({
+                        user: session?.user ?? null,
+                        session,
+                        loading: false,
+                        isAdmin,
+                    })
+                }
             }
         )
 
