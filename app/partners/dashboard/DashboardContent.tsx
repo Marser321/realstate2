@@ -224,12 +224,23 @@ export default function DashboardPage() {
                     <p className="text-muted-foreground mb-6">
                         Para acceder al dashboard, primero debes registrar tu inmobiliaria.
                     </p>
-                    <a
-                        href="/partners/registro"
-                        className="btn-luxe py-3 px-6 rounded-xl text-white font-medium inline-flex items-center gap-2"
-                    >
-                        Registrar Inmobiliaria
-                    </a>
+                    <div className="flex flex-col gap-3">
+                        <a
+                            href="/partners/registro"
+                            className="btn-luxe py-3 px-6 rounded-xl text-white font-medium inline-flex items-center justify-center gap-2"
+                        >
+                            Registrar Inmobiliaria
+                        </a>
+                        {(user as any)?.is_admin || (user?.email?.includes('admin') ?? false) ? (
+                            <a
+                                href="/admin"
+                                className="py-3 px-6 rounded-xl border border-gold/30 text-gold hover:bg-gold/10 font-medium inline-flex items-center justify-center gap-2 transition-colors"
+                            >
+                                <Target className="w-4 h-4" />
+                                Panel de Administración
+                            </a>
+                        ) : null}
+                    </div>
                 </div>
             </div>
         )

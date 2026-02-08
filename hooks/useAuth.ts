@@ -8,6 +8,7 @@ interface AuthState {
     user: User | null
     session: Session | null
     loading: boolean
+    isAdmin: boolean
 }
 
 /**
@@ -19,27 +20,47 @@ export function useAuth() {
         user: null,
         session: null,
         loading: true,
+        isAdmin: false,
     })
 
     useEffect(() => {
         const supabase = getSupabaseBrowserClient()
 
+        const checkAdminStatus = async (userId: string) => {
+            const { data } = await supabase
+                .from('profiles')
+                .select('is_admin')
+                .eq('id', userId)
+                .single()
+            return !!data?.is_admin
+        }
+
         // Get initial session
-        supabase.auth.getSession().then(({ data: { session } }: any) => {
+        supabase.auth.getSession().then(async ({ data: { session } }: any) => {
+            let isAdmin = false
+            if (session?.user) {
+                isAdmin = await checkAdminStatus(session.user.id)
+            }
             setAuthState({
                 user: session?.user ?? null,
                 session,
                 loading: false,
+                isAdmin,
             })
         })
 
         // Subscribe to auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            (_event: any, session: any) => {
+            async (_event: any, session: any) => {
+                let isAdmin = false
+                if (session?.user) {
+                    isAdmin = await checkAdminStatus(session.user.id)
+                }
                 setAuthState({
                     user: session?.user ?? null,
                     session,
                     loading: false,
+                    isAdmin,
                 })
             }
         )
