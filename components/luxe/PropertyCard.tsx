@@ -84,7 +84,7 @@ export function PropertyCard({ property, onHover, index = 0, className = '' }: P
     };
 
     return (
-        <CardContainer className={`inter-var ${className}`}>
+        <CardContainer className="inter-var h-full" containerClassName={`py-0 ${className}`}>
             <CardBody className="bg-card relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-4 border transition-all duration-300">
 
                 <Link href={`/property/${property.id}`} className="block h-full group">
