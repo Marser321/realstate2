@@ -111,6 +111,42 @@ export default function DashboardPage() {
         }
 
         const fetchProperties = async () => {
+            // MOCK PROPERTIES FOR VISUAL REVIEW
+            if (agency.id === 1) {
+                setProperties([
+                    {
+                        id: 101,
+                        title: 'Villa Marítima Exclusiva',
+                        slug: 'villa-maritima',
+                        status: 'for_sale',
+                        price: 2500000,
+                        currency: 'USD',
+                        main_image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2671&auto=format&fit=crop',
+                        view_count: 1245,
+                        bedrooms: 5,
+                        bathrooms: 6,
+                        is_featured: true,
+                        created_at: new Date().toISOString()
+                    } as any,
+                    {
+                        id: 102,
+                        title: 'Penthouse en La Barra',
+                        slug: 'penthouse-barra',
+                        status: 'for_rent',
+                        price: 850000,
+                        currency: 'USD',
+                        main_image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop',
+                        view_count: 56,
+                        bedrooms: 3,
+                        bathrooms: 3,
+                        is_featured: false,
+                        created_at: new Date().toISOString()
+                    } as any,
+                ])
+                setLoading(false)
+                return
+            }
+
             const supabase = getSupabaseBrowserClient()
             const { data, error } = await supabase
                 .from('properties')

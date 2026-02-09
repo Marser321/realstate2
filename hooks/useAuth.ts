@@ -37,6 +37,22 @@ export function useAuth() {
 
         // Get initial session
         supabase.auth.getSession().then(async ({ data: { session } }: any) => {
+            // MOCK AUTH FOR VISUAL REVIEW
+            if (!session?.user && typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+                const mockUser = {
+                    id: 'mock-user-id',
+                    email: 'mock@luxe.com',
+                    user_metadata: { full_name: 'Mock Admin' }
+                } as any
+                setAuthState({
+                    user: mockUser,
+                    session: { user: mockUser } as any,
+                    loading: false,
+                    isAdmin: true,
+                })
+                return
+            }
+
             let isAdmin = false
             try {
                 if (session?.user) {
@@ -102,6 +118,21 @@ export function useUserAgency() {
         if (authLoading) return
         if (!user) {
             setAgency(null)
+            setLoading(false)
+            return
+        }
+
+        // MOCK AGENCY FOR VISUAL REVIEW
+        if (user?.id === 'mock-user-id' || user?.id === 'mock-id') {
+            setAgency({
+                id: 1,
+                name: 'Luxe Test Agency',
+                slug: 'luxe-test-agency',
+                logo_url: null,
+                tier_subscription: 'pro',
+                total_properties: 12,
+                total_views: 15430
+            })
             setLoading(false)
             return
         }

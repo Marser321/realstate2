@@ -71,6 +71,50 @@ export default function SniperDashboard() {
                 .order('created_at', { ascending: false })
                 .limit(50)
 
+            // MOCK DATA FOR VISUAL REVIEW
+            if (typeof window !== 'undefined' && window.location.hostname === 'localhost' && (!data || data.length === 0)) {
+                setProspects([
+                    {
+                        id: '1',
+                        address: 'Rambla Lorenzo Batlle Pacheco, Parada 8',
+                        owner_name: 'Inversiones del Sur S.A.',
+                        listed_price: 850000,
+                        market_estimate: 780000,
+                        source: 'mercadolibre',
+                        status: 'new',
+                        quality_score: 92,
+                        days_on_market: 5,
+                        last_contact: new Date().toISOString()
+                    },
+                    {
+                        id: '2',
+                        address: 'Av. Pedragosa Sierra s/n',
+                        owner_name: 'María Fernández',
+                        listed_price: 1200000,
+                        market_estimate: 1150000,
+                        source: 'mercadolibre',
+                        status: 'contacted',
+                        quality_score: 88,
+                        days_on_market: 14,
+                        last_contact: new Date(Date.now() - 86400000 * 2).toISOString()
+                    },
+                    {
+                        id: '3',
+                        address: 'Calle 20 y 24, Península',
+                        owner_name: 'Carlos Rodriguez',
+                        listed_price: 320000,
+                        market_estimate: 310000,
+                        source: 'google_maps',
+                        status: 'qualified',
+                        quality_score: 75,
+                        days_on_market: 30,
+                        last_contact: new Date(Date.now() - 86400000 * 5).toISOString()
+                    }
+                ])
+                setLoading(false)
+                return
+            }
+
             if (data) {
                 // Map DB columns to UI types
                 const mappedProspects: ProspectRow[] = (data as ProspectProperty[]).map(p => ({

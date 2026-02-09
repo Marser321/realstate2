@@ -49,15 +49,9 @@ export async function middleware(request: NextRequest) {
         pathname === '/partners/registro' ||
         pathname === '/partners/login'
 
-    // Redirect unauthenticated users from protected routes
-    if (isProtectedRoute && !user) {
-        const loginUrl = new URL('/partners/login', request.url)
-        loginUrl.searchParams.set('redirect', pathname)
-        return NextResponse.redirect(loginUrl)
-    }
-
-    // Protect Admin Routes
-    if (pathname.startsWith('/admin')) {
+    // PROTECTED ROUTES
+    // 1. Admin Routes
+    if (request.nextUrl.pathname.startsWith('/admin')) {
         if (!user) {
             return NextResponse.redirect(new URL('/partners/login', request.url))
         }

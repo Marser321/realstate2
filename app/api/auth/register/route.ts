@@ -65,10 +65,11 @@ export async function POST(request: Request) {
 
         const agencyId = agencyData.id
 
-        // 3. Create Public Profile
+        // 3. Create or Update Public Profile
+        // Note: A trigger might have already created the profile, so we use upsert
         const { error: profileError } = await supabaseAdmin
             .from('profiles')
-            .insert({
+            .upsert({
                 id: userId,
                 full_name: adminName,
                 role: 'agent', // Default role for agency self-registration

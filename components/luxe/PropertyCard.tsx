@@ -89,7 +89,7 @@ export function PropertyCard({ property, onHover, index = 0, className = '' }: P
 
     return (
         <CardContainer className="inter-var h-full w-full" containerClassName={`py-0 ${className}`}>
-            <CardBody className={`bg-card relative group/card dark:hover:shadow-2xl dark:hover:shadow-[#D4AF37]/20 dark:bg-black w-full min-h-[550px] h-full rounded-xl p-4 border transition-all duration-300 flex flex-col justify-between ${isBoosted
+            <CardBody className={`bg-card relative group/card dark:hover:shadow-2xl dark:hover:shadow-[#D4AF37]/20 dark:bg-black w-full h-full rounded-xl p-4 border transition-all duration-300 flex flex-col justify-between ${isBoosted
                 ? 'border-[#D4AF37] shadow-lg shadow-[#D4AF37]/10'
                 : 'dark:border-white/[0.1] border-black/[0.1]'
                 }`}>
